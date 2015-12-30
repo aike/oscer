@@ -17,6 +17,7 @@ func main() {
 			os.Exit(2)
 		}
 	}
+	osc.Send()
 	os.Exit(0)
 }
 

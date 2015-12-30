@@ -2,30 +2,27 @@ package osc
 
 import (
 	"fmt"
-//	"net"
+	"net"
 	"os"
 	"regexp"
 	"strconv"
+	"bytes"
+	"encoding/binary"
 	"errors"
 //	"time"
 )
 
-var bytes []byte
+var serverIP string
+var serverPort string
+var data []byte
+var initdata bool = false
 
-/*
-func main() {
-	if len(os.Args) < 4 {
-		// snowosc localhost 12000 /test/test 120 30 25
-		usage()
+func Send() {
+	if !initdata {
+		return
 	}
 
-	serverIP := "localhost"
-	serverPort := "12000"
-
-	message := os.Args[1]
-
-
-	udpAddr, err := net.ResolveUDPAddr("udp", serverIP+":"+serverPort)
+	udpAddr, err := net.ResolveUDPAddr("udp", serverIP + ":" + serverPort)
 	checkError(err)
 
 	conn, err := net.DialUDP("udp", nil, udpAddr)
@@ -33,10 +30,8 @@ func main() {
 	defer conn.Close()
 
 //	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-	conn.Write([]byte(message))
-
+	conn.Write(data)
 }
-*/
 
 func checkError(err error) {
 	if err != nil {
@@ -46,7 +41,8 @@ func checkError(err error) {
 }
 
 func CheckArg(arr []string) error {
-//	var arg []string
+	data = []byte{}
+
 	if len(arr) < 4 {
 		return errors.New("args error")
 	}
@@ -55,6 +51,7 @@ func CheckArg(arr []string) error {
 	if !match(`^[A-Za-z0-9\-\.]+$`, host) {
 		return errors.New("hostname error")
 	}
+	serverIP = host
 
 	port, err := strconv.Atoi(arr[2])
 	if err != nil {
@@ -63,12 +60,13 @@ func CheckArg(arr []string) error {
 	if port < 0 || port > 65535 {
 		return errors.New("port number error")		
 	}
+	serverPort = arr[2]
 
 	adsr := arr[3]
 	if !match(`^/.+[^/]$`, adsr) {
 		return errors.New("osc address error")
 	}
-	pushByteStr(adsr)
+	pushDataStr(adsr)
 
 	idx := 0
 	for i := 4; i < len(arr); i++ {
@@ -80,12 +78,14 @@ func CheckArg(arr []string) error {
 			if err != nil {
 				return errors.New("osc args error")
 			}
-			pushByteF32(num_f32)
+			pushDataF32(num_f32)
 		} else {
-			pushByteI32(num_i32)
+			pushDataI32(num_i32)
 		}
 		idx++
 	}
+
+	initdata = true
 	return nil
 }
 
@@ -93,16 +93,25 @@ func match(reg, str string) bool {
     return regexp.MustCompile(reg).Match([]byte(str))
 }
 
-func pushByteStr(str string) {
-
+func pushDataStr(str string) {
+	data = append(data, []byte(str)...)
+	for datalen := len(str); datalen % 4 != 0; datalen++ {
+		data = append(data, 0)
+	}
 }
 
-func pushByteI32(num int32) {
-
+func pushDataI32(num int32) {
+	buf := bytes.NewBuffer([]byte{})
+	data = append(data, 0x2c, 0x69, 0, 0)
+	binary.Write(buf, binary.BigEndian, num)
+	data = append(data, buf.Bytes()...)
 }
 
-func pushByteF32(num float32) {
-
+func pushDataF32(num float32) {
+	buf := bytes.NewBuffer([]byte{})
+	data = append(data, 0x2c, 0x66, 0, 0)
+	binary.Write(buf, binary.BigEndian, num)
+	data = append(data, buf.Bytes()...)
 }
 
 
