@@ -14,7 +14,8 @@ import (
 
 var serverIP string
 var serverPort string
-var data []byte
+var senddata []byte
+var oscarg []byte
 var initdata bool = false
 
 func Send() {
@@ -30,7 +31,7 @@ func Send() {
 	defer conn.Close()
 
 //	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-	conn.Write(data)
+	conn.Write(senddata)
 }
 
 func checkError(err error) {
@@ -41,7 +42,8 @@ func checkError(err error) {
 }
 
 func CheckArg(arr []string) error {
-	data = []byte{}
+	senddata = []byte{}
+	oscarg = []byte{}
 
 	if len(arr) < 4 {
 		return errors.New("args error")
@@ -85,6 +87,9 @@ func CheckArg(arr []string) error {
 		idx++
 	}
 
+	fill4byte()
+	senddata = append(senddata, oscarg...)
+
 	initdata = true
 	return nil
 }
@@ -94,24 +99,29 @@ func match(reg, str string) bool {
 }
 
 func pushDataStr(str string) {
-	data = append(data, []byte(str)...)
-	for datalen := len(str); datalen % 4 != 0; datalen++ {
-		data = append(data, 0)
+	senddata = append(senddata, []byte(str)...)
+	fill4byte()
+	senddata = append(senddata, 0x2c)
+}
+
+func fill4byte() {
+	for datalen := len(senddata); datalen % 4 != 0; datalen++ {
+		senddata = append(senddata, 0)
 	}
 }
 
 func pushDataI32(num int32) {
+	senddata = append(senddata, 'i')
 	buf := bytes.NewBuffer([]byte{})
-	data = append(data, 0x2c, 0x69, 0, 0)
 	binary.Write(buf, binary.BigEndian, num)
-	data = append(data, buf.Bytes()...)
+	oscarg = append(oscarg, buf.Bytes()...)
 }
 
 func pushDataF32(num float32) {
+	senddata = append(senddata, 'f')
 	buf := bytes.NewBuffer([]byte{})
-	data = append(data, 0x2c, 0x66, 0, 0)
 	binary.Write(buf, binary.BigEndian, num)
-	data = append(data, buf.Bytes()...)
+	oscarg = append(oscarg, buf.Bytes()...)
 }
 
 
