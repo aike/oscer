@@ -124,5 +124,7 @@ func pushDataF32(num float32) {
 	oscarg = append(oscarg, buf.Bytes()...)
 }
 
-
+func GetData() []byte {
+	return senddata
+}
 
