@@ -1,3 +1,6 @@
+// oscer.go by aike
+// licenced under MIT License. 
+
 package main
 
 import (

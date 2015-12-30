@@ -1,3 +1,6 @@
+// osc.go by aike
+// licenced under MIT License. 
+
 package osc
 
 import (

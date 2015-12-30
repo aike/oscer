@@ -1,3 +1,6 @@
+// oscer_test.go by aike
+// licenced under MIT License. 
+
 package osc_test
 
 import (
