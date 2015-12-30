@@ -115,6 +115,16 @@ func Test_NgArg2(t *testing.T) {
 
 ///////////////////////////////////////
 
+func Test_MessageArgNone(t *testing.T) {
+	arg := []string{"oscer", "localhost", "12000", "/test"}
+	expected := []byte {0x2f, 0x74, 0x65, 0x73, 0x74, 0x00, 0x00, 0x00,
+						0x2c, 0x00, 0x00, 0x00 }
+	_ = osc.CheckArg(arg)
+	if bytes.Compare(expected, osc.GetData()) != 0 {
+		t.Error("message test none NG")
+	}
+}
+
 func Test_MessageArgInt(t *testing.T) {
 	arg := []string{"oscer", "localhost", "12000", "/test", "100"}
 	expected := []byte {0x2f, 0x74, 0x65, 0x73, 0x74, 0x00, 0x00, 0x00,

@@ -6,14 +6,17 @@ import (
 	"./osc"
 )
 
+var version string = "1.0"
+
 func main() {
 	err := osc.CheckArg(os.Args)
 	if err != nil {
 		if err.Error() == "args error" {
-			fmt.Fprintf(os.Stderr, "usage: %s host port path [args ...]\n", os.Args[0])
+			fmt.Fprintf(os.Stderr, "oscer ver %s\n", version)
+			fmt.Fprintf(os.Stderr, "usage: oscer host port /osc/address [args ...]\n")
 			os.Exit(1)
 		} else {
-			fmt.Println(err)
+			fmt.Fprintf(os.Stderr, "%s\n", err)
 			os.Exit(2)
 		}
 	}

@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-//	"time"
 )
 
 var serverIP string
@@ -30,7 +29,6 @@ func Send() {
 	checkError(err)
 	defer conn.Close()
 
-//	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
 	conn.Write(senddata)
 }
 
