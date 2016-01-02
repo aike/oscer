@@ -101,6 +101,7 @@ func match(reg, str string) bool {
 
 func pushDataStr(str string) {
 	senddata = append(senddata, []byte(str)...)
+	senddata = append(senddata, 0)
 	fill4byte()
 	senddata = append(senddata, 0x2c)
 }
