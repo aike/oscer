@@ -66,7 +66,7 @@ func CheckArg(arr []string) error {
 	serverPort = arr[2]
 
 	adsr := arr[3]
-	if !match(`^/.+[^/]$`, adsr) {
+	if !match(`^/.*[^/]$`, adsr) {
 		return errors.New("osc address error")
 	}
 	pushDataStr(adsr)
