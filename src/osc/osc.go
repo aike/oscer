@@ -88,6 +88,7 @@ func CheckArg(arr []string) error {
 		idx++
 	}
 
+	senddata = append(senddata, 0)
 	fill4byte()
 	senddata = append(senddata, oscarg...)
 
