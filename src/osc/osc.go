@@ -51,10 +51,15 @@ func CheckArg(arr []string) error {
 	}
 
 	host := arr[1]
-	if !match(`^[A-Za-z0-9\-\.]+$`, host) {
+	if match(`^[A-Za-z0-9\-\.]+$`, host) {
+		// IPv4
+		serverIP = host
+	} else if match(`^[:%A-Za-z0-9]+$`, host) {
+		// IPv6
+		serverIP = "[" + host + "]"
+	} else {
 		return errors.New("hostname error")
 	}
-	serverIP = host
 
 	port, err := strconv.Atoi(arr[2])
 	if err != nil {

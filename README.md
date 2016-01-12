@@ -3,8 +3,10 @@ oscer
 simple command-line OSC sending tool
 
 ##FEATURES
-- send OSC packet via UDP
-- support int and float parameters
+- send OSC packet over UDP
+- support int32 and float32 parameters
+- support IPv4 and IPv6 protocol
+- cross compiled executable binaries are available (MacOSX, Windows, Linux, RaspberryPi)
 
 ##Usage
 ```
