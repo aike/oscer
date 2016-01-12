@@ -16,8 +16,9 @@ simple command-line OSC sending tool
 ##Example
 ```
  oscer localhost 10000 /hello
- oscer 192.168.1.100 11000 /1/push1 1
- oscer 192.168.1.101 12000 /accxyz 0.5 0.2 1.0
+ oscer fe80::1%lo0 11000 /world
+ oscer 192.168.1.100 12000 /1/push1 1
+ oscer 192.168.1.101 13000 /accxyz 0.5 0.2 1.0
 ```
 
 ##WEBSITE

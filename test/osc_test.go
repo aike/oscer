@@ -25,6 +25,23 @@ func Test_Ok2(t *testing.T) {
 	}
 }
 
+func Test_Ok3(t *testing.T) {
+	arg := []string{"oscer", "::1", "12000", "/test/test"}
+	err := osc.CheckArg(arg)
+	if err != nil {
+		t.Error("legal arguments NG")
+	}
+}
+
+func Test_Ok4(t *testing.T) {
+	arg := []string{"oscer", `fe80::aa66:7fff:fe22:12f8%en0`, "12000", "/test/test"}
+	err := osc.CheckArg(arg)
+	if err != nil {
+		t.Error("legal arguments NG")
+	}
+}
+
+
 ///////////////////////////////////////
 
 
