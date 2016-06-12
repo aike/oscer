@@ -18,7 +18,7 @@ simple command-line OSC messaging tool
 ##Example
 ```
  oscer localhost 10000 /hello
- oscer fe80::1%lo0 11000 /world
+ oscer fe80::1%lo0 11000 /hello world
  oscer 192.168.1.100 12000 /1/push1 1
  oscer 192.168.1.101 13000 /accxyz 0.5 0.2 1.0
 
