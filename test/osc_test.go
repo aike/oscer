@@ -41,6 +41,22 @@ func Test_Ok4(t *testing.T) {
 	}
 }
 
+func Test_Ok_Server1(t *testing.T) {
+	arg := []string{"oscer", "receive", "12000"}
+	ok := osc.IsServer(arg)
+	if !ok {
+		t.Error("server check NG")
+	}
+}
+
+func Test_Ok_Server2(t *testing.T) {
+	arg := []string{"oscer", "192.168.0.1", "12000", "/test/test"}
+	ok := osc.IsServer(arg)
+	if ok {
+		t.Error("server check NG")
+	}
+}
+
 
 ///////////////////////////////////////
 
@@ -118,14 +134,6 @@ func Test_OkArg4(t *testing.T) {
 }
 
 func Test_NgArg1(t *testing.T) {
-	arg := []string{"oscer", "localhost", "12000", "/test/test", "100abc"}
-	err := osc.CheckArg(arg)
-	if err == nil {
-		t.Error("illegal arguments test NG")
-	}
-}
-
-func Test_NgArg2(t *testing.T) {
 	arg := []string{"oscer", "localhost", "12000", "/test/test", "1.1.1"}
 	err := osc.CheckArg(arg)
 	if err == nil {
@@ -197,3 +205,37 @@ func Test_Message3Args(t *testing.T) {
 		t.Error("message test 3 args NG")
 	}
 }
+
+func Test_MessageString(t *testing.T) {
+	arg := []string{"oscer", "localhost", "12000", "/hello", "world"}
+	expected := []byte {0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x00, 0x00,
+						0x2c, 0x73, 0x00, 0x00, 0x77, 0x6f, 0x72, 0x6c,
+						0x64, 0x00, 0x00, 0x00}
+	_ = osc.CheckArg(arg)	
+	if bytes.Compare(expected, osc.GetData()) != 0 {
+		t.Error("message test string NG")
+	}
+}
+
+func Test_MessageIntStrFloatStr(t *testing.T) {
+	arg := []string{"oscer", "localhost", "12000", "/hello", "10", "str1", "1.5", "str2"}
+	expected := []byte {0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x00, 0x00,
+						0x2c, 0x69, 0x73, 0x66, 0x73, 0x00, 0x00, 0x00,
+						0x00, 0x00, 0x00, 0x0a, 0x73, 0x74, 0x72, 0x31,
+						0x00, 0x00, 0x00, 0x00, 0x3f, 0xc0, 0x00, 0x00,
+						0x73, 0x74, 0x72, 0x32, 0x00, 0x00, 0x00, 0x00 }
+	_ = osc.CheckArg(arg)
+
+//	b := osc.GetData()
+//	for i := 0; i < len(b); i++ {
+//		fmt.Printf("%02x ", b[i])
+//	}
+//	fmt.Println("")
+
+	if bytes.Compare(expected, osc.GetData()) != 0 {
+		t.Error("message test int str float str NG")
+	}
+}
+
+
+

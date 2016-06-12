@@ -1,16 +1,18 @@
 oscer
 ====
-simple command-line OSC sending tool
+simple command-line OSC messaging tool
 
 ##FEATURES
-- send OSC packet over UDP
-- support int32 and float32 parameters
-- support IPv4 and IPv6 protocol
+- send/receive OSC packet over UDP
+- support int32, float32 and string parameters
+- sender supports IPv4 and IPv6 protocol
+- receiver supports IPv4 protocol
 - cross compiled executable binaries are available (MacOSX, Windows, Linux, RaspberryPi)
 
 ##Usage
 ```
  oscer host port /osc/address [args ...]
+ oscer receive port
 ```
 
 ##Example
@@ -19,6 +21,8 @@ simple command-line OSC sending tool
  oscer fe80::1%lo0 11000 /world
  oscer 192.168.1.100 12000 /1/push1 1
  oscer 192.168.1.101 13000 /accxyz 0.5 0.2 1.0
+
+ oscer receive 10000
 ```
 
 ##WEBSITE
