@@ -14,7 +14,7 @@ var version string = "1.2"
 func main() {
 	if osc.IsServer(os.Args) {
 		// server
-		err :=osc.CreateServer(os.Args[2])
+		err := osc.CreateServer(os.Args[2])
 		checkError(err)
 		os.Exit(0)
 
