@@ -130,7 +130,7 @@ func CreateServer(portstr string) error {
 		return errors.New("port number error")		
 	}
 
-    addr, err := net.ResolveUDPAddr("udp", "localhost:" + portstr)
+    addr, err := net.ResolveUDPAddr("udp", ":" + portstr)
 	if err != nil {
 		return errors.New("server resolve error")		
 	}
