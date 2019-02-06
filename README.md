@@ -2,20 +2,20 @@ oscer
 ====
 simple command-line OSC messaging tool
 
-##FEATURES
+## FEATURES
 - send/receive OSC packet over UDP
 - support int32, float32 and string parameters
 - sender supports IPv4 and IPv6 protocol
 - receiver supports IPv4 protocol
 - cross compiled executable binaries are available (MacOSX, Windows, Linux, RaspberryPi)
 
-##Usage
+## Usage
 ```
  oscer host port /osc/address [args ...]
  oscer receive port
 ```
 
-##Example
+## Example
 ```
  oscer localhost 10000 /hello
  oscer fe80::1%lo0 11000 /hello world
@@ -25,9 +25,9 @@ simple command-line OSC messaging tool
  oscer receive 10000
 ```
 
-##WEBSITE
+## WEBSITE
 http://github.com/aike/oscer
 
-##CREDIT
-oscer program is licenced under MIT License.  
+## CREDIT
+oscer program is licensed under MIT License.  
 Contact: twitter @aike1000
