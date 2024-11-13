@@ -7,7 +7,7 @@ simple command-line OSC messaging tool
 - support int32, float32 and string parameters
 - sender supports IPv4 and IPv6 protocol
 - receiver supports IPv4 protocol
-- cross compiled executable binaries are available (MacOSX, Windows, Linux, RaspberryPi)
+- cross compiled executable binaries are available (M1/AMD macOS, Windows, Linux, RaspberryPi)
 
 ## Usage
 ```

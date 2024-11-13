@@ -1,12 +1,12 @@
 // oscer_test.go by aike
 // licenced under MIT License. 
 
-package osc_test
+package oscer_test
 
 import (
 	"testing"
 	"bytes"
-	"../src/osc"
+	"oscer/osc"
 )
 
 func Test_Ok1(t *testing.T) {

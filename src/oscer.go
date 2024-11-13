@@ -6,7 +6,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"./osc"
+	"oscer/osc"
 )
 
 var version string = "1.2"
