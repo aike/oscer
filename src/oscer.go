@@ -9,7 +9,7 @@ import (
 	"oscer/osc"
 )
 
-var version string = "1.2"
+var version string = "1.3"
 
 func main() {
 	if osc.IsServer(os.Args) {
